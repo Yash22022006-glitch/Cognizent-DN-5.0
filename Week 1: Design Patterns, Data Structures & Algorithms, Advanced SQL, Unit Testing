@@ -1,0 +1,345 @@
+CTS Digital Nurture 5.0 - Python FSE
+
+1. Design Patterns and Principles
+Definition
+
+Design Patterns are reusable solutions to commonly occurring software design problems. They provide best practices for designing maintainable and scalable software applications.
+
+Benefits
+Reusable Code
+Better Maintainability
+Improved Scalability
+Easier Debugging
+Standardized Development
+SOLID Principles
+1. Single Responsibility Principle (SRP)
+
+A class should have only one reason to change.
+
+Example
+class Employee:
+    def calculate_salary(self):
+        pass
+
+class EmployeeDatabase:
+    def save_employee(self):
+        pass
+2. Open Closed Principle (OCP)
+
+Software entities should be open for extension but closed for modification.
+
+class Shape:
+    pass
+
+class Circle(Shape):
+    pass
+
+class Rectangle(Shape):
+    pass
+3. Liskov Substitution Principle (LSP)
+
+Derived classes should be replaceable with their base classes.
+
+4. Interface Segregation Principle (ISP)
+
+Clients should not be forced to depend on interfaces they do not use.
+
+5. Dependency Inversion Principle (DIP)
+
+High-level modules should not depend on low-level modules.
+
+Singleton Design Pattern
+Definition
+
+Singleton Pattern ensures that only one object of a class is created.
+
+Example
+class Singleton:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+Applications
+Database Connections
+Logging Systems
+Configuration Management
+2. Data Structures and Algorithms
+What is a Data Structure?
+
+A Data Structure is a way of organizing and storing data efficiently.
+
+Array (Python List)
+Definition
+
+An ordered collection of elements.
+
+Example
+arr = [10, 20, 30, 40]
+Operations
+arr.append(50)
+arr.remove(20)
+Time Complexity
+Operation	Complexity
+Access	O(1)
+Search	O(n)
+Insert	O(n)
+Delete	O(n)
+Linked List
+Definition
+
+A collection of nodes where each node contains data and a reference to the next node.
+
+Example
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+Diagram
+10 -> 20 -> 30 -> None
+Stack
+Definition
+
+Stack follows Last In First Out (LIFO).
+
+Example
+stack = []
+
+stack.append(10)
+stack.append(20)
+
+stack.pop()
+Applications
+Undo Operations
+Browser History
+Function Calls
+Queue
+Definition
+
+Queue follows First In First Out (FIFO).
+
+Example
+from collections import deque
+
+queue = deque()
+
+queue.append(10)
+queue.append(20)
+
+queue.popleft()
+Applications
+CPU Scheduling
+Task Processing
+Printer Queue
+Searching Algorithms
+Linear Search
+Algorithm
+Start from first element
+Compare with target value
+Continue until found
+Return index
+Code
+def linear_search(arr, key):
+    for i in range(len(arr)):
+        if arr[i] == key:
+            return i
+    return -1
+Complexity
+Time Complexity: O(n)
+Binary Search
+Condition
+
+Array must be sorted.
+
+Code
+def binary_search(arr, key):
+    left = 0
+    right = len(arr) - 1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arr[mid] == key:
+            return mid
+
+        elif arr[mid] < key:
+            left = mid + 1
+
+        else:
+            right = mid - 1
+
+    return -1
+Complexity
+Time Complexity: O(log n)
+Sorting Algorithms
+Bubble Sort
+Definition
+
+Repeatedly compares adjacent elements and swaps them if necessary.
+
+Example
+def bubble_sort(arr):
+    n = len(arr)
+
+    for i in range(n):
+        for j in range(n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+Complexity
+Time Complexity: O(n²)
+Quick Sort
+Definition
+
+Divide and Conquer sorting algorithm.
+
+Complexity
+Best Case : O(n log n)
+Average Case : O(n log n)
+Worst Case : O(n²)
+3. Advanced SQL
+What is SQL?
+
+Structured Query Language (SQL) is used to manage and manipulate relational databases.
+
+Joins
+INNER JOIN
+
+Returns matching records from both tables.
+
+SELECT *
+FROM Employee E
+INNER JOIN Department D
+ON E.DepartmentID = D.DepartmentID;
+LEFT JOIN
+
+Returns all records from the left table and matching records from the right table.
+
+SELECT *
+FROM Employee E
+LEFT JOIN Department D
+ON E.DepartmentID = D.DepartmentID;
+RIGHT JOIN
+
+Returns all records from the right table and matching records from the left table.
+
+FULL JOIN
+
+Returns all records when there is a match in either table.
+
+GROUP BY
+
+Groups rows with the same values.
+
+SELECT Department,
+COUNT(*)
+FROM Employee
+GROUP BY Department;
+HAVING
+
+Filters grouped data.
+
+SELECT Department,
+COUNT(*)
+FROM Employee
+GROUP BY Department
+HAVING COUNT(*) > 5;
+Window Functions
+ROW_NUMBER()
+SELECT Name,
+ROW_NUMBER() OVER()
+FROM Employee;
+RANK()
+SELECT Name,
+Salary,
+RANK() OVER(ORDER BY Salary DESC)
+FROM Employee;
+Primary Key
+
+A column that uniquely identifies each record in a table.
+
+CREATE TABLE Student(
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50)
+);
+Normalization
+
+Process of organizing database tables to reduce redundancy.
+
+Types
+1NF
+2NF
+3NF
+BCNF
+4. Unit Testing
+What is Unit Testing?
+
+Unit Testing verifies individual units of code work correctly.
+
+Benefits
+Detect Bugs Early
+Improve Code Quality
+Easier Maintenance
+unittest Framework
+Example
+import unittest
+
+def add(a, b):
+    return a + b
+
+class TestMath(unittest.TestCase):
+
+    def test_add(self):
+        self.assertEqual(add(2, 3), 5)
+
+if __name__ == "__main__":
+    unittest.main()
+PyTest Framework
+Example
+def add(a, b):
+    return a + b
+
+def test_add():
+    assert add(2, 3) == 5
+Execute
+pytest
+Advantages
+Easy Syntax
+Faster Execution
+Detailed Reports
+5. Jest and Mocha (Overview)
+Jest
+
+JavaScript testing framework developed by Meta.
+
+Example
+test('Addition Test', () => {
+  expect(2 + 3).toBe(5);
+});
+Mocha
+
+JavaScript testing framework used for Node.js applications.
+
+Example
+describe('Addition Test', () => {
+  it('should return 5', () => {
+  });
+});
+
+
+After completing Week 1, I gained knowledge in:
+
+Software Design Principles
+Design Patterns
+Data Structures
+Searching and Sorting Algorithms
+Advanced SQL Concepts
+Unit Testing using unittest and PyTest
+Basic Understanding of Jest and Mocha
+Interview Preparation for Python Full Stack Engineering
+
+Author: Yashvanth S R
+Program: Cognizant Digital Nurture 5.0
+Track: Python Full Stack Engineer (Python FSE)
+Week: 1
+Repository: CTS-DN5-PythonFSE-Week1
