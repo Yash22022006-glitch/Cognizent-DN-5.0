@@ -1,59 +1,133 @@
-CTS Digital Nurture 5.0 - Python FSE
+# Python FSE - Week 1 Detailed Study Guide (CTS Digital Nurture 5.0)
 
-1. Design Patterns and Principles
-Definition
+## Week 1 Topics
 
-Design Patterns are reusable solutions to commonly occurring software design problems. They provide best practices for designing maintainable and scalable software applications.
+* Design Patterns and Principles
+* Data Structures and Algorithms (DSA)
+* Advanced SQL
+* Unit Testing (PyTest, unittest)
+* Jest & Mocha Basics
 
-Benefits
-Reusable Code
-Better Maintainability
-Improved Scalability
-Easier Debugging
-Standardized Development
-SOLID Principles
-1. Single Responsibility Principle (SRP)
+---
+
+# 1. Design Patterns and Principles
+
+## What are Design Patterns?
+
+Design Patterns are reusable solutions to common software design problems.
+
+### Benefits
+
+* Reusable Code
+* Better Maintainability
+* Scalability
+* Easy Debugging
+* Improved Software Architecture
+
+---
+
+## SOLID Principles
+
+### S - Single Responsibility Principle (SRP)
 
 A class should have only one reason to change.
 
-Example
+### Bad Example
+
+```python
 class Employee:
     def calculate_salary(self):
         pass
 
-class EmployeeDatabase:
-    def save_employee(self):
+    def save_to_database(self):
         pass
-2. Open Closed Principle (OCP)
+```
+
+### Good Example
+
+```python
+class Employee:
+    def calculate_salary(self):
+        pass
+
+class EmployeeDB:
+    def save(self):
+        pass
+```
+
+### Interview Question
+
+**Q:** What is SRP?
+
+**Answer:** A class should perform only one responsibility and have only one reason to change.
+
+---
+
+### O - Open Closed Principle (OCP)
 
 Software entities should be open for extension but closed for modification.
 
-class Shape:
+```python
+class Discount:
+    def apply(self):
+        pass
+
+class FestivalDiscount(Discount):
+    def apply(self):
+        return "20%"
+```
+
+### Interview Question
+
+**Q:** Explain Open Closed Principle.
+
+**Answer:** Existing code should not be modified while adding new functionality.
+
+---
+
+### L - Liskov Substitution Principle (LSP)
+
+Child classes should be replaceable with parent classes without changing program behavior.
+
+```python
+class Bird:
+    def fly(self):
+        pass
+
+class Sparrow(Bird):
+    pass
+```
+
+---
+
+### I - Interface Segregation Principle (ISP)
+
+Clients should not be forced to depend on methods they do not use.
+
+---
+
+### D - Dependency Inversion Principle (DIP)
+
+Depend on abstractions, not concrete implementations.
+
+```python
+class Keyboard:
     pass
 
-class Circle(Shape):
-    pass
+class Computer:
+    def __init__(self, keyboard):
+        self.keyboard = keyboard
+```
 
-class Rectangle(Shape):
-    pass
-3. Liskov Substitution Principle (LSP)
+---
 
-Derived classes should be replaceable with their base classes.
+## Singleton Design Pattern
 
-4. Interface Segregation Principle (ISP)
+Ensures that only one object of a class exists.
 
-Clients should not be forced to depend on interfaces they do not use.
+### Example
 
-5. Dependency Inversion Principle (DIP)
-
-High-level modules should not depend on low-level modules.
-
-Singleton Design Pattern
-Definition
-
-Singleton Pattern ensures that only one object of a class is created.
-
-Example
+```python
 class Singleton:
     _instance = None
 
@@ -61,285 +135,553 @@ class Singleton:
         if cls._instance is None:
             cls._instance = super().__new__(cls)
         return cls._instance
-Applications
-Database Connections
-Logging Systems
-Configuration Management
-2. Data Structures and Algorithms
-What is a Data Structure?
 
-A Data Structure is a way of organizing and storing data efficiently.
+a = Singleton()
+b = Singleton()
 
-Array (Python List)
-Definition
+print(a == b)
+```
 
-An ordered collection of elements.
+### Output
 
-Example
-arr = [10, 20, 30, 40]
-Operations
-arr.append(50)
-arr.remove(20)
-Time Complexity
-Operation	Complexity
-Access	O(1)
-Search	O(n)
-Insert	O(n)
-Delete	O(n)
-Linked List
-Definition
+```text
+True
+```
 
-A collection of nodes where each node contains data and a reference to the next node.
+### Real-Time Uses
 
-Example
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-Diagram
-10 -> 20 -> 30 -> None
-Stack
-Definition
+* Database Connections
+* Logger Objects
+* Configuration Managers
 
-Stack follows Last In First Out (LIFO).
+---
 
-Example
+## Factory Design Pattern
+
+Creates objects without exposing object creation logic.
+
+```python
+class Car:
+    pass
+
+class Bike:
+    pass
+
+class VehicleFactory:
+    def create_vehicle(self, vehicle):
+        if vehicle == "car":
+            return Car()
+        return Bike()
+```
+
+### Interview Questions
+
+#### Oral
+
+* What is SOLID?
+* What is a Design Pattern?
+* Singleton vs Factory Pattern?
+* Advantages of Design Patterns?
+* Real-time use of Singleton?
+
+#### Coding
+
+* Create a Singleton Class.
+* Implement Factory Pattern.
+
+---
+
+# 2. Data Structures and Algorithms
+
+## Time Complexity
+
+Measures algorithm efficiency.
+
+| Complexity | Meaning            |
+| ---------- | ------------------ |
+| O(1)       | Constant           |
+| O(log n)   | Logarithmic        |
+| O(n)       | Linear             |
+| O(n log n) | Linear Logarithmic |
+| O(n²)      | Quadratic          |
+
+---
+
+## Array (List)
+
+```python
+arr = [10, 20, 30]
+```
+
+### Operations
+
+```python
+arr.append(40)
+arr.pop()
+```
+
+---
+
+## Stack
+
+### LIFO (Last In First Out)
+
+```python
 stack = []
 
 stack.append(10)
 stack.append(20)
 
-stack.pop()
-Applications
-Undo Operations
-Browser History
-Function Calls
-Queue
-Definition
+print(stack.pop())
+```
 
-Queue follows First In First Out (FIFO).
+### Output
 
-Example
+```text
+20
+```
+
+### Applications
+
+* Undo Operation
+* Browser History
+* Function Call Stack
+
+---
+
+## Queue
+
+### FIFO (First In First Out)
+
+```python
 from collections import deque
 
-queue = deque()
+q = deque()
 
-queue.append(10)
-queue.append(20)
+q.append(10)
+q.append(20)
 
-queue.popleft()
-Applications
-CPU Scheduling
-Task Processing
-Printer Queue
-Searching Algorithms
-Linear Search
-Algorithm
-Start from first element
-Compare with target value
-Continue until found
-Return index
-Code
-def linear_search(arr, key):
-    for i in range(len(arr)):
-        if arr[i] == key:
-            return i
-    return -1
-Complexity
-Time Complexity: O(n)
-Binary Search
-Condition
+print(q.popleft())
+```
 
-Array must be sorted.
+### Output
 
-Code
-def binary_search(arr, key):
-    left = 0
-    right = len(arr) - 1
+```text
+10
+```
 
-    while left <= right:
-        mid = (left + right) // 2
+### Applications
 
-        if arr[mid] == key:
-            return mid
+* CPU Scheduling
+* Task Processing
+* Printer Queue
 
-        elif arr[mid] < key:
-            left = mid + 1
+---
+
+## Linked List
+
+Node-based data structure.
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+```
+
+---
+
+## Binary Search
+
+### Algorithm
+
+1. Find middle element.
+2. Compare with target.
+3. Search left or right half.
+4. Repeat until found.
+
+### Pseudocode
+
+```text
+start = 0
+end = n - 1
+
+while start <= end
+
+    mid = (start + end) // 2
+
+    if arr[mid] == target
+        return mid
+
+    if arr[mid] < target
+        start = mid + 1
+
+    else
+        end = mid - 1
+```
+
+### Python Code
+
+```python
+def binary_search(arr, target):
+    l, r = 0, len(arr) - 1
+
+    while l <= r:
+        m = (l + r) // 2
+
+        if arr[m] == target:
+            return m
+
+        elif arr[m] < target:
+            l = m + 1
 
         else:
-            right = mid - 1
+            r = m - 1
 
     return -1
-Complexity
-Time Complexity: O(log n)
-Sorting Algorithms
-Bubble Sort
-Definition
+```
 
-Repeatedly compares adjacent elements and swaps them if necessary.
+### Complexity
 
-Example
-def bubble_sort(arr):
-    n = len(arr)
+```text
+O(log n)
+```
 
-    for i in range(n):
-        for j in range(n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-Complexity
-Time Complexity: O(n²)
-Quick Sort
-Definition
+---
 
-Divide and Conquer sorting algorithm.
+## Bubble Sort
 
-Complexity
-Best Case : O(n log n)
-Average Case : O(n log n)
-Worst Case : O(n²)
-3. Advanced SQL
-What is SQL?
+### Algorithm
 
-Structured Query Language (SQL) is used to manage and manipulate relational databases.
+1. Compare adjacent elements.
+2. Swap if larger.
+3. Repeat until sorted.
 
-Joins
-INNER JOIN
+### Code
 
-Returns matching records from both tables.
+```python
+arr = [5, 3, 1, 4]
 
-SELECT *
-FROM Employee E
-INNER JOIN Department D
-ON E.DepartmentID = D.DepartmentID;
-LEFT JOIN
+for i in range(len(arr)):
+    for j in range(len(arr) - 1):
+        if arr[j] > arr[j + 1]:
+            arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
-Returns all records from the left table and matching records from the right table.
+print(arr)
+```
 
-SELECT *
-FROM Employee E
-LEFT JOIN Department D
-ON E.DepartmentID = D.DepartmentID;
-RIGHT JOIN
+### Output
 
-Returns all records from the right table and matching records from the left table.
+```text
+[1, 3, 4, 5]
+```
 
-FULL JOIN
+---
 
-Returns all records when there is a match in either table.
+## Interview Questions
 
-GROUP BY
+### Oral
 
-Groups rows with the same values.
+* Difference between Array and Linked List?
+* Stack vs Queue?
+* What is Recursion?
+* Explain Big-O Notation.
+* What is Binary Search?
 
-SELECT Department,
-COUNT(*)
-FROM Employee
-GROUP BY Department;
-HAVING
+### Coding
 
-Filters grouped data.
+* Reverse String
+* Palindrome Check
+* Implement Stack
+* Binary Search
+* Sort Array
+* Find Duplicates
+* Fibonacci Series
+* Prime Number
+* Two Sum Problem
+* Linked List Insertion
 
-SELECT Department,
-COUNT(*)
-FROM Employee
-GROUP BY Department
-HAVING COUNT(*) > 5;
-Window Functions
-ROW_NUMBER()
-SELECT Name,
-ROW_NUMBER() OVER()
-FROM Employee;
-RANK()
-SELECT Name,
-Salary,
-RANK() OVER(ORDER BY Salary DESC)
-FROM Employee;
-Primary Key
+---
 
-A column that uniquely identifies each record in a table.
+# 3. Advanced SQL
 
-CREATE TABLE Student(
-    StudentID INT PRIMARY KEY,
-    Name VARCHAR(50)
+## DDL Commands
+
+### CREATE
+
+```sql
+CREATE TABLE Employee(
+    id INT,
+    name VARCHAR(50)
 );
-Normalization
+```
 
-Process of organizing database tables to reduce redundancy.
+### ALTER
 
-Types
-1NF
-2NF
-3NF
-BCNF
-4. Unit Testing
-What is Unit Testing?
+```sql
+ALTER TABLE Employee
+ADD salary INT;
+```
 
-Unit Testing verifies individual units of code work correctly.
+### DROP
 
-Benefits
-Detect Bugs Early
-Improve Code Quality
-Easier Maintenance
-unittest Framework
-Example
+```sql
+DROP TABLE Employee;
+```
+
+---
+
+## DML Commands
+
+### INSERT
+
+```sql
+INSERT INTO Employee
+VALUES(1,'John');
+```
+
+### UPDATE
+
+```sql
+UPDATE Employee
+SET salary = 50000
+WHERE id = 1;
+```
+
+### DELETE
+
+```sql
+DELETE FROM Employee
+WHERE id = 1;
+```
+
+---
+
+## JOINS
+
+### INNER JOIN
+
+```sql
+SELECT *
+FROM Employee e
+INNER JOIN Department d
+ON e.deptid = d.id;
+```
+
+### LEFT JOIN
+
+```sql
+SELECT *
+FROM Employee e
+LEFT JOIN Department d
+ON e.deptid = d.id;
+```
+
+---
+
+## GROUP BY
+
+```sql
+SELECT deptid,
+COUNT(*)
+FROM Employee
+GROUP BY deptid;
+```
+
+---
+
+## HAVING
+
+```sql
+SELECT deptid,
+COUNT(*)
+FROM Employee
+GROUP BY deptid
+HAVING COUNT(*) > 2;
+```
+
+---
+
+## Window Function - ROW_NUMBER()
+
+```sql
+SELECT *,
+ROW_NUMBER() OVER(
+PARTITION BY deptid
+ORDER BY salary DESC
+)
+FROM Employee;
+```
+
+---
+
+## SQL Interview Questions
+
+### Oral
+
+* Difference between WHERE and HAVING?
+* Primary Key vs Foreign Key?
+* What are Joins?
+* Explain Normalization.
+* Clustered vs Non-Clustered Index?
+
+### SQL Coding
+
+* Second Highest Salary
+* Nth Highest Salary
+* Duplicate Records
+* Delete Duplicates
+* Employees Above Average Salary
+* Top 3 Salaries Department Wise
+* Employees Without Department
+* Rank Salaries
+
+---
+
+# 4. Unit Testing (PyTest & unittest)
+
+## Why Testing?
+
+Testing ensures that applications work correctly and helps identify bugs early.
+
+---
+
+## unittest Example
+
+```python
 import unittest
 
 def add(a, b):
     return a + b
 
-class TestMath(unittest.TestCase):
+class TestAdd(unittest.TestCase):
 
     def test_add(self):
         self.assertEqual(add(2, 3), 5)
 
 if __name__ == "__main__":
     unittest.main()
-PyTest Framework
-Example
+```
+
+---
+
+## PyTest Example
+
+```python
 def add(a, b):
     return a + b
 
 def test_add():
     assert add(2, 3) == 5
-Execute
+```
+
+### Run
+
+```bash
 pytest
-Advantages
-Easy Syntax
-Faster Execution
-Detailed Reports
-5. Jest and Mocha (Overview)
-Jest
+```
 
-JavaScript testing framework developed by Meta.
+---
 
-Example
-test('Addition Test', () => {
-  expect(2 + 3).toBe(5);
+## Interview Questions
+
+* What is Unit Testing?
+* PyTest vs unittest?
+* Assertions?
+* Mocking?
+* Test Coverage?
+
+---
+
+# 5. Jest & Mocha Basics
+
+## Jest Example
+
+```javascript
+function add(a,b){
+    return a+b;
+}
+
+test("addition",()=>{
+    expect(add(2,3)).toBe(5);
 });
-Mocha
+```
 
-JavaScript testing framework used for Node.js applications.
+---
 
-Example
-describe('Addition Test', () => {
-  it('should return 5', () => {
-  });
+## Mocha Example
+
+```javascript
+const assert = require("assert");
+
+describe("Add", function(){
+
+    it("should add", function(){
+
+        assert.equal(2+3, 5);
+
+    });
+
 });
+```
 
+---
+
+# Most Important CTS DN 5.0 Coding Questions
+
+## Easy
+
+* Palindrome
+* Fibonacci
+* Prime Number
+* Armstrong Number
+* Reverse String
+* Reverse Number
+* Factorial
+* Anagram
+
+## Medium
+
+* Binary Search
+* Two Sum
+* Missing Number
+* Merge Sorted Arrays
+* Duplicate Elements
+* Longest Common Prefix
+* Valid Parentheses
+* Matrix Rotation
+
+## SQL
+
+* Second Highest Salary
+* Nth Highest Salary
+* Employee Manager Query
+* Joins
+* Group By
+* Window Functions
+* CTE
+* Stored Procedure
+
+---
+
+# Learning Outcome
 
 After completing Week 1, I gained knowledge in:
 
-Software Design Principles
-Design Patterns
-Data Structures
-Searching and Sorting Algorithms
-Advanced SQL Concepts
-Unit Testing using unittest and PyTest
-Basic Understanding of Jest and Mocha
-Interview Preparation for Python Full Stack Engineering
+* Design Patterns and SOLID Principles
+* Data Structures and Algorithms
+* Time Complexity Analysis
+* Searching and Sorting Algorithms
+* Advanced SQL Concepts
+* Unit Testing using unittest and PyTest
+* Basics of Jest and Mocha
+* CTS Technical Interview Preparation
 
-Author: Yashvanth S R
-Program: Cognizant Digital Nurture 5.0
-Track: Python Full Stack Engineer (Python FSE)
-Week: 1
-Repository: CTS-DN5-PythonFSE-Week1
+---
+
+### Author
+
+**Name:** Yashvanth S R
+**Program:** Cognizant Digital Nurture 5.0
+**Track:** Python Full Stack Engineer (Python FSE)
+**Week:** 1
